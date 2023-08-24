@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+<!--    <serializer class = ""-->
+    <port>8888</port>
+
+    <aplicationName>defatdasd</aplicationName>
+    <serializer name="dsad" class = "dsad"/>
+
+
+
+</configuration>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+        <!ELEMENT configuration (
+                port? |
+                appName? |
+                serializer? |
+                compressor? |
+                register? |
+                loadbalancer?
+                )>
+
+        <!ELEMENT port (#PCDATA)>
+        <!ELEMENT appName (#PCDATA)>
+
+        <!ELEMENT serializer EMPTY>
+        <!ATTLIST serializer
+                class CDATA #IMPLIED
+                name (hessian | jdk) #IMPLIED>
+
+        <!ELEMENT compressor EMPTY>
+        <!ATTLIST compressor
+                class CDATA #IMPLIED
+                name  (gzip) #IMPLIED>
+
+        <!ELEMENT register EMPTY>
+        <!ATTLIST register
+                class CDATA #REQUIRED
+                connect CDATA #REQUIRED>
+
+        <!ELEMENT loadbalancer EMPTY>
+        <!ATTLIST loadbalancer
+                class CDATA #REQUIRED>
+
+
+

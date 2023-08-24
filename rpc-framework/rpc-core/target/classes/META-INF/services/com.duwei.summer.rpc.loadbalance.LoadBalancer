@@ -1,0 +1,2 @@
+com.duwei.summer.rpc.loadbalance.impl.ConsistentHashLoadBalancer
+com.duwei.summer.rpc.loadbalance.impl.RoundRobinLoadBalancer
