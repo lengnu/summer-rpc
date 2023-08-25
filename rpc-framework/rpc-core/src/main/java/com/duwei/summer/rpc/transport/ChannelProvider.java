@@ -1,7 +1,6 @@
 package com.duwei.summer.rpc.transport;
 
 import com.duwei.summer.rpc.exception.NetworkException;
-import com.duwei.summer.rpc.registry.NettyBootstrapInitializer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -9,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.*;
 
 /**
@@ -37,7 +37,9 @@ public class ChannelProvider {
 
     public void removeChannel(InetSocketAddress address) {
         channelCache.remove(address);
+        log.debug("与服务器{}断开连接，移除缓存移Channel",address);
     }
+
 
 
     /**
@@ -63,7 +65,7 @@ public class ChannelProvider {
         Channel channel;
         CompletableFuture<Channel> channelCompleteFuture = new CompletableFuture<>();
         ChannelFuture future = nettyBootstrapInitializer.connect(inetSocketAddress).addListener((ChannelFutureListener) channelFuture -> {
-            if (channelFuture.isDone()) {
+            if (channelFuture.isSuccess()) {
                 if (log.isDebugEnabled()) {
                     log.debug("与服务器{}成功建立了连接", inetSocketAddress);
                 }

@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface Selector {
     InetSocketAddress next();
+
+    List<InetSocketAddress> getAll();
 }

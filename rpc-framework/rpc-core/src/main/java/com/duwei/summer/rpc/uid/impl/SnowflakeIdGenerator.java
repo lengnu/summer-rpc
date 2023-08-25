@@ -1,4 +1,8 @@
-package com.duwei.summer.rpc.uid;
+package com.duwei.summer.rpc.uid.impl;
+
+import com.duwei.summer.rpc.uid.AbstractIdGenerator;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * ID生成器-采用雪花算法
@@ -18,7 +22,7 @@ package com.duwei.summer.rpc.uid;
  * IdWorker idWorker = new IdWorker(1); //
  * long id = idWorker.nextId();
  */
-public class SnowflakeIdWorker implements IdWorker {
+public class SnowflakeIdGenerator extends AbstractIdGenerator {
     /**
      * 起始timestamp
      */
@@ -63,13 +67,16 @@ public class SnowflakeIdWorker implements IdWorker {
      */
     public static final long SEQUENCE_MASK = ~(-1L << SEQUENCE_BITS);
 
-    private final long workerId;
-    private final long dataCenterId;
+    public static final String DATA_CENTER_ID = "dataCenterId";
+    public static final String WORKER_ID = "workerId";
+
+    private  long workerId;
+    private  long dataCenterId;
     private long sequenceId;
     private long lastTimestamp = -1L;
     private final Object lock = new Object();
 
-    public SnowflakeIdWorker(long workerId, long dataCenterId) {
+    public SnowflakeIdGenerator(long workerId, long dataCenterId) {
         if (workerId > WORKER_ID_MAX || workerId < 0) {
             throw new IllegalArgumentException("工作机器ID不合法");
         }
@@ -78,6 +85,9 @@ public class SnowflakeIdWorker implements IdWorker {
         }
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;
+    }
+
+    public SnowflakeIdGenerator() {
     }
 
     @Override
@@ -121,4 +131,20 @@ public class SnowflakeIdWorker implements IdWorker {
         return System.currentTimeMillis();
     }
 
+    @Override
+    protected void init() {
+        Object dataCenter = getIdGeneratorConfig().getAttribute(DATA_CENTER_ID);
+        if (dataCenter == null){
+            this.dataCenterId = ThreadLocalRandom.current().nextLong(DATA_CENTER_ID_MAX);
+        }else {
+            this.dataCenterId = Long.parseLong(dataCenter.toString());
+        }
+
+        Object worker = getIdGeneratorConfig().getAttribute(WORKER_ID);
+        if (worker == null){
+            this.dataCenterId = ThreadLocalRandom.current().nextLong(WORKER_ID_MAX);
+        }else {
+            this.dataCenterId = Long.parseLong(worker.toString());
+        }
+    }
 }

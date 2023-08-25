@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
         <!ELEMENT configuration (
-                port? |
-                appName? |
+                application? |
                 serializer? |
                 compressor? |
                 register? |
-                loadbalancer?
+                loadbalancer? |
+                idGenerator?
                 )>
 
         <!ELEMENT port (#PCDATA)>
@@ -14,22 +14,37 @@
 
         <!ELEMENT serializer EMPTY>
         <!ATTLIST serializer
-                class CDATA #IMPLIED
-                name (hessian | jdk) #IMPLIED>
+                class CDATA #IMPLIED>
 
         <!ELEMENT compressor EMPTY>
         <!ATTLIST compressor
-                class CDATA #IMPLIED
-                name  (gzip) #IMPLIED>
+                class CDATA #IMPLIED>
 
-        <!ELEMENT register EMPTY>
+        <!ELEMENT register (properties?)>
         <!ATTLIST register
                 class CDATA #REQUIRED
-                connect CDATA #REQUIRED>
+                host CDATA #REQUIRED
+                port CDATA #REQUIRED>
 
-        <!ELEMENT loadbalancer EMPTY>
+        <!--负载均衡配置-->
+        <!ELEMENT loadbalancer (properties?)>
         <!ATTLIST loadbalancer
                 class CDATA #REQUIRED>
 
+        <!--id生成器的属性-->
+        <!ELEMENT idGenerator (properties?)>
+        <!ATTLIST loadbalancer
+                class CDATA #REQUIRED>
 
+        <!--property属性，给其他属性赋予额外信息-->
+        <!ELEMENT property EMPTY>
+        <!ATTLIST property
+                key CDATA  #REQUIRED
+                value CDATA #REQUIRED>
 
+        <!ELEMENT application EMPTY>
+        <!ATTLIST application
+                port CDATA #REQUIRED
+                name CDATA #REQUIRED>
+
+        <!ELEMENT  properties (property*)>

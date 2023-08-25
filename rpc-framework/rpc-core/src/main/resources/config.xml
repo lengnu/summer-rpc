@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <port>8888</port>
+    <register class="com.duwei.summer.rpc.registry.zk.ZookeeperRegistry" port="8888" host="127.0.0.1">
+        <properties>
+            <property key="username" value="root"/>
+        </properties>
+    </register>
+
+    <loadbalancer class="com.duwei.summer.rpc.loadbalance.impl.ConsistentHashLoadBalancer">
+        <properties>
+            <property key="virtual" value="20"/>
+        </properties>
+    </loadbalancer>
+
+    <idGenerator class="com.duwei.summer.rpc.uid.impl.SnowflakeIdGenerator">
+        <properties>
+            <property key="dataCenterId" value="2"/>
+            <property key="workerId" value="3"/>
+        </properties>
+    </idGenerator>
+
+    <application port="8899" name="default:test"/>
+    <serializer name="jdk"/>
+    <compressor name="gzip"/>
+
+
+</configuration>

@@ -1,9 +1,12 @@
 package com.duwei.summer.rpc.registry.zk;
 
-import com.duwei.summer.rpc.compress.ServiceConfig;
+import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.constant.Constant;
 import com.duwei.summer.rpc.exception.DiscoveryException;
-import com.duwei.summer.rpc.registry.Registry;
+import com.duwei.summer.rpc.exception.ZookeeperException;
+import com.duwei.summer.rpc.registry.AbstractRegistry;
+import com.duwei.summer.rpc.registry.RegistryConfig;
+import com.duwei.summer.rpc.registry.zk.watch.PerceptionWatcher;
 import com.duwei.summer.rpc.util.NetworkUtils;
 import com.duwei.summer.rpc.util.zookeeper.ZookeeperNode;
 import com.duwei.summer.rpc.util.zookeeper.ZookeeperUtils;
@@ -25,44 +28,60 @@ import java.util.stream.Collectors;
  * @since: 1.0
  */
 @Slf4j
-public class ZookeeperRegistry implements Registry {
+public class ZookeeperRegistry extends AbstractRegistry {
     private ZooKeeper zooKeeper;
+    private static final int SESSION_TIMEOUT = 60 * 1000;
 
-    public ZookeeperRegistry(String connectionStr, int timeout) {
-        this.zooKeeper = ZookeeperUtils.createZookeeper(connectionStr, timeout);
-    }
+    public static final String BASE_ROOT_PATH = "/summer-rpc-metadata";
+    public static final String BASE_ROOT_SERVICE_PATH = BASE_ROOT_PATH + "/services";
+
 
     public ZookeeperRegistry() {
-        this.zooKeeper = ZookeeperUtils.createZookeeper();
+
+    }
+
+    private void createParentIfNeed(String path,CreateMode createMode) {
+        if (!ZookeeperUtils.exists(zooKeeper, path, null)) {
+            ZookeeperNode node = new ZookeeperNode(path, null);
+            ZookeeperUtils.createNode(zooKeeper, node, createMode, null);
+        }
     }
 
     @Override
     public void registry(ServiceConfig<?> serviceConfig) {
         // 服务名称节点，持久节点
-        String parentNode = Constant.BASE_PROVIDERS_PATH +
+        String parentNode = BASE_ROOT_SERVICE_PATH +
                 "/" + serviceConfig.getInterfaceProvider().getName();
+        createParentIfNeed(parentNode,CreateMode.PERSISTENT);
 
-        if (!ZookeeperUtils.exists(zooKeeper, parentNode, null)) {
-            ZookeeperNode node = new ZookeeperNode(parentNode, null);
-            ZookeeperUtils.createNode(zooKeeper, node, CreateMode.PERSISTENT, null);
+        // 分组节点
+        String defaultNode = parentNode + "/" + serviceConfig.getGroup();
+        createParentIfNeed(defaultNode,CreateMode.PERSISTENT);
+
+        // 注册本机服务
+        // 创建的是临时节点
+        String nodePath = defaultNode + "/" + NetworkUtils.getIp() + ":" + getRegistryConfig().getPort();
+        if (!ZookeeperUtils.exists(zooKeeper, nodePath, null)) {
+            createParentIfNeed(nodePath,CreateMode.EPHEMERAL);
         }
 
-        // TODO 后续处理端口
-        String nodePath = parentNode + "/" + NetworkUtils.getIp() + ":" + 9999;
-
         if (log.isDebugEnabled()) {
-            log.debug("服务{}已经被注册", serviceConfig);
+            log.debug("服务{}已经被注册,分组{}", serviceConfig.getInterfaceProvider(), serviceConfig
+                    .getGroup());
         }
     }
 
     @Override
-    public List<InetSocketAddress> lookup(String serviceName) {
-        String serviceNodePath = Constant.BASE_PROVIDERS_PATH + "/" + serviceName;
-        List<String> serviceNodeList = ZookeeperUtils.getChildren(zooKeeper, serviceNodePath, null);
+    public List<InetSocketAddress> lookup(String serviceName, String group) {
+        String serviceNodePath = BASE_ROOT_SERVICE_PATH + "/" + serviceName + "/" + group;
+        List<String> serviceNodeList = ZookeeperUtils.getChildren(
+                zooKeeper,
+                serviceNodePath,
+                new PerceptionWatcher(getRegistryConfig().getApplicationContext()));
         if (serviceNodeList == null || serviceNodeList.size() == 0) {
-            throw new DiscoveryException("未找到可用的服务列表");
+            log.error("未找到可用的服务列表{}!", serviceName);
+            throw new DiscoveryException("未找到可用的服务列表" + serviceName);
         }
-        // TODO
         return serviceNodeList.stream().map(serviceNode -> {
             InetSocketAddress inetSocketAddress = parseInet(serviceNode);
             if (log.isDebugEnabled()) {
@@ -72,13 +91,32 @@ public class ZookeeperRegistry implements Registry {
         }).collect(Collectors.toList());
     }
 
-    /**
-     * 从字符串解析出IP和Host
-     */
+    @Override
+    public void init() {
+        RegistryConfig registryConfig = getRegistryConfig();
+        String connectStr = registryConfig.getHost() + ":" + registryConfig.getHost();
+        zooKeeper = ZookeeperUtils.createZookeeper(connectStr, SESSION_TIMEOUT);
+        ZookeeperUtils.createNode(zooKeeper,
+                new ZookeeperNode(BASE_ROOT_PATH, null),
+                CreateMode.PERSISTENT,
+                null
+        );
+        ZookeeperUtils.createNode(zooKeeper,
+                new ZookeeperNode(BASE_ROOT_SERVICE_PATH, null),
+                CreateMode.PERSISTENT,
+                null
+        );
+    }
+
     private InetSocketAddress parseInet(String serviceNode) {
-        String[] ipAndPort = serviceNode.split(":");
-        String ip = ipAndPort[0];
-        int port = Integer.parseInt(ipAndPort[1]);
-        return new InetSocketAddress(ip, port);
+        try {
+            String[] strings = serviceNode.split(":");
+            String host = strings[0];
+            int port = Integer.parseInt(strings[1]);
+            return new InetSocketAddress(host, port);
+        } catch (Exception e) {
+            log.error("非法的节点路径，无法解析{}", serviceNode);
+            throw new ZookeeperException("非法的节点路径，无法解析" + serviceNode);
+        }
     }
 }

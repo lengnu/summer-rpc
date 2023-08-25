@@ -4,6 +4,7 @@ import com.duwei.summer.rpc.context.ApplicationContext;
 import com.duwei.summer.rpc.registry.Registry;
 
 import java.net.InetSocketAddress;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,22 +22,42 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractLoadBalancer implements LoadBalancer {
     private final Map<String, Selector> serviceSelectorCache = new ConcurrentHashMap<>(8);
-    protected ApplicationContext applicationContext;
+    private LoadBalancerConfig loadBalancerConfig;
 
     @Override
-    public void setApplication(ApplicationContext application) {
-        this.applicationContext = application;
+    public void init(LoadBalancerConfig loadBalancerConfig) {
+        this.loadBalancerConfig = loadBalancerConfig;
+        this.init();
+    }
+
+    protected abstract void init();
+
+
+    public LoadBalancerConfig getLoadBalancerConfig() {
+        return loadBalancerConfig;
     }
 
     @Override
-    public InetSocketAddress selectServiceAddress(String serviceName) {
+    public List<InetSocketAddress> getServiceAddress(String serviceName) {
+        Selector selector = serviceSelectorCache.get(serviceName);
+        if (selector == null){
+            return Collections.emptyList();
+        }
+        return selector.getAll();
+    }
+
+    @Override
+    public InetSocketAddress selectServiceAddress(String serviceName,String group) {
         Selector selector = serviceSelectorCache.get(serviceName);
         if (selector == null) {
             synchronized (this) {
                 selector = serviceSelectorCache.get(serviceName);
                 if (selector == null) {
-                    List<InetSocketAddress> serviceAddressList = applicationContext.getRegistry().lookup(serviceName);
-                    selector = getSelector(serviceName,serviceAddressList);
+                    System.out.println(getLoadBalancerConfig().getApplicationContext() + "lo");
+                    List<InetSocketAddress> serviceAddressList =
+                            getLoadBalancerConfig().getApplicationContext()
+                            .getRegistryConfig().getRegistry().lookup(serviceName, group);
+                    selector = getSelector(serviceName, serviceAddressList);
                     serviceSelectorCache.put(serviceName, selector);
                 }
             }
@@ -46,14 +67,14 @@ public abstract class AbstractLoadBalancer implements LoadBalancer {
 
     @Override
     public synchronized void updateServiceList(String serviceName, List<InetSocketAddress> serviceAddressList) {
-        serviceSelectorCache.put(serviceName, getSelector(serviceName,serviceAddressList));
+        serviceSelectorCache.put(serviceName, getSelector(serviceName, serviceAddressList));
     }
 
     /**
      * 留给子类实现，初始化一个选择器
-     *
+     * @param serviceName 服务名称
      * @param serviceAddressList 服务列表
      * @return 对应选择器
      */
-    protected abstract Selector getSelector(String serviceName,List<InetSocketAddress> serviceAddressList);
+    protected abstract Selector getSelector(String serviceName, List<InetSocketAddress> serviceAddressList);
 }

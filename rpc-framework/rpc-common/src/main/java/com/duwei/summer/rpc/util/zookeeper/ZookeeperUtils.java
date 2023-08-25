@@ -70,7 +70,7 @@ public class ZookeeperUtils {
             if (zooKeeper.exists(node.getPath(), watcher) == null) {
                 zooKeeper.create(node.getPath(),
                         node.getData(),
-                        null,
+                        ZooDefs.Ids.OPEN_ACL_UNSAFE,
                         createMode
                 );
                 log.info("节点{}创建成功", node.getPath());

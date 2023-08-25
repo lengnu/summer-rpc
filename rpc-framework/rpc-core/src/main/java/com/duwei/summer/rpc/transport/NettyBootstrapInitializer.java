@@ -1,4 +1,4 @@
-package com.duwei.summer.rpc.registry;
+package com.duwei.summer.rpc.transport;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

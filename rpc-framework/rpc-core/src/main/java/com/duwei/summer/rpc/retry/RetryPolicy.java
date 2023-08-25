@@ -22,5 +22,13 @@ public interface RetryPolicy {
      */
     boolean hasRetryTimes();
 
+    /**
+     * 默认重试次数
+     */
+    int DEFAULT_RETRY_TIMES = 3;
+    /**
+     * 默认重试间隔
+     */
+    int DEFAULT_RETRY_INTERVAL = 200;
 
 }

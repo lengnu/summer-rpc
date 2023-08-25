@@ -1,13 +1,13 @@
 package com.duwei.summer.rpc.registry;
 
-import com.duwei.summer.rpc.compress.ServiceConfig;
-
-import java.net.InetSocketAddress;
-import java.util.List;
+import com.duwei.summer.rpc.property.AttributeAccessorSupport;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
- *  抽象注册中心接口，提供模板方法
+ * 抽象注册中心接口，提供模板方法
  * <p>
  *
  * @author: duwei
@@ -15,14 +15,19 @@ import java.util.List;
  * @since: 1.0
  */
 
-public class AbstractRegistry implements Registry{
-    @Override
-    public void registry(ServiceConfig<?> serviceConfig) {
+@Data
+@NoArgsConstructor
+public abstract class AbstractRegistry implements Registry {
+    private RegistryConfig registryConfig;
 
+    @Override
+    public void init(RegistryConfig registryConfig) {
+        this.registryConfig = registryConfig;
+        this.init();
     }
 
-    @Override
-    public List<InetSocketAddress> lookup(String serviceName) {
-        return null;
-    }
+    /**
+     * 子类的初始化钩子方法
+     */
+    protected abstract void init();
 }

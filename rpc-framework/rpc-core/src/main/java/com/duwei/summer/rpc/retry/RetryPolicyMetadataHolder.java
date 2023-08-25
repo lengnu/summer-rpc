@@ -5,6 +5,9 @@ import com.duwei.summer.rpc.annotation.Retry;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * @author duwei
+ */
 public  class RetryPolicyMetadataHolder {
         private final int retryTimes;
         private final int tickTimes;

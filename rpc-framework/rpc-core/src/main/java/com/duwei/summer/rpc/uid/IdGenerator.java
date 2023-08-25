@@ -9,6 +9,8 @@ package com.duwei.summer.rpc.uid;
  * @date: 2023-08-24 10:48
  * @since: 1.0
  */
-public interface IdWorker {
+public interface IdGenerator {
     long nextId();
+
+    void init(IdGeneratorConfig idGeneratorConfig);
 }

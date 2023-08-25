@@ -17,11 +17,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class RpcResponseHandler extends SimpleChannelInboundHandler<RpcResponse> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception {
-        byte responseCode = rpcResponse.getCode();
-        switch (responseCode) {
-            case :
-                ResponseCode.SUCCESS.getCode()
-        }
+//        byte responseCode = rpcResponse.getCode();
+//        switch (responseCode) {
+//            case :
+//                ResponseCode.SUCCESS.getCode()
+//        }
     }
 
 

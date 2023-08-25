@@ -8,105 +8,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c317e6da-d71d-40ae-9cc4-8249bbeb82d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rpc-demo/rpc-client-demo/src/main/java/com/duwei/summer/rpc/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-demo/rpc-provider-demo/src/main/java/com/duwei/summer/rpc/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/constant/Constant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/CodecException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/CompressException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/DiscoveryException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/LoadBalanceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/NetworkException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/RegistryException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/SerializeException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/XmlParseException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/ZookeeperConnectionException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/ZookeeperException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/ClassScanner.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/DateUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/HashUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/NetworkUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/StringUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/zookeeper/ZookeeperNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/zookeeper/ZookeeperUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/Bootstrap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/Retry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/RpcService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/Compressor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/ServiceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/impl/GzipCompressor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/ApplicationContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/Configuration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/RequestHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/spi/SpiHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/spi/SpiResolver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/LocalDtdEntityResolver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/XmlReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/rpc-config.dtd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/core/HeartbeatDetector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/discovery/ReferenceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/AbstractLoadBalancer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/LoadBalancer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/Selector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/ConsistentHashLoadBalancer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/RoundRobinLoadBalancer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/protection/CircuitBreaker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/protection/RateLimiter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/protection/TokenBuketRateLimiter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/proxy/RpcConsumerInvocationHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/AbstractRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/NettyBootstrapInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/Registry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/RegistryConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/ZookeeperRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/watch/PerceptionWatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/AbstractRetryPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/ExponentialRetreatRetryPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/FixedIntervalRetryPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RandomRetryPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicyMetadataHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/Serializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/impl/HessianSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/impl/JdkSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/impl/JsonSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/spi/SpiHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/ChannelProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/codec/RequestDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/codec/RequestEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/codec/ResponseDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/codec/ResponseEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/ConsumerChannelInitializerHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/client/RpcResponseHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/service/MethodCallHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/MessageFormatConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/request/RequestPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/request/RequestType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/request/RpcRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/response/ResponseCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/message/response/RpcResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/IdWorker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/SnowflakeIdWorker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/META-INF/services/com.duwei.summer.rpc.compress.Compressor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/META-INF/services/com.duwei.summer.rpc.loadbalance.LoadBalancer" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/META-INF/services/rpc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/configuration.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-manager/src/main/java/com/duwei/summer/rpc/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-demo/rpc-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-demo/rpc-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-demo/rpc-provider-demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-demo/rpc-provider-demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-demo/src/main/java/com/duwei/rpc/test/NettyTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-framework/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-manager/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-manager/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/exception/RpcRemoteInvokeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/property/AttributeAccessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/property/AttributeAccessorSupport.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/NumberUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorRegister.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/config/BaseConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/ApplicationContextAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/LoadBalancerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/LoadBalancerConfigs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/RegistryConfigs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerRegister.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/test/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/test/IUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/test/Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/AbstractIdGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/IdGeneratorConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/IdGeneratorConfigs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-demo/rpc-client-demo/src/main/java/com/duwei/summer/rpc/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-demo/rpc-client-demo/src/main/java/com/duwei/summer/rpc/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-demo/rpc-provider-demo/src/main/java/com/duwei/summer/rpc/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-demo/rpc-provider-demo/src/main/java/com/duwei/summer/rpc/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/NetworkUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/NetworkUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/zookeeper/ZookeeperUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-common/src/main/java/com/duwei/summer/rpc/util/zookeeper/ZookeeperUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/Bootstrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/Bootstrap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/Retry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/Retry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/RpcService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/annotation/RpcService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/CompressorFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/compress/ServiceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/config/ServiceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/ApplicationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/ApplicationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/Configuration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/RequestHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/RequestHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/spi/SpiResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/spi/SpiResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/XmlReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/XmlReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/rpc-config.dtd" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/context/xml/rpc-config.dtd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/discovery/ReferenceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/config/ReferenceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/AbstractLoadBalancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/AbstractLoadBalancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/LoadBalancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/LoadBalancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/Selector.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/Selector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/ConsistentHashLoadBalancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/ConsistentHashLoadBalancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/RoundRobinLoadBalancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/loadbalance/impl/RoundRobinLoadBalancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/proxy/RpcConsumerInvocationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/proxy/RpcConsumerInvocationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/AbstractRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/AbstractRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/NettyBootstrapInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/NettyBootstrapInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/Registry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/Registry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/RegistryConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/RegistryConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/ZookeeperRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/ZookeeperRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/watch/PerceptionWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/registry/zk/watch/PerceptionWatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicy.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicyMetadataHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/retry/RetryPolicyMetadataHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/serialize/SerializerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/ChannelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/ChannelProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/client/RpcResponseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/client/RpcResponseHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/service/MethodCallHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/transport/handler/service/MethodCallHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/IdWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/IdGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/SnowflakeIdWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/uid/impl/SnowflakeIdGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/configuration.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/target/classes/com/duwei/summer/rpc/context/xml/rpc-config.dtd" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-framework/rpc-core/target/classes/com/duwei/summer/rpc/context/xml/rpc-config.dtd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-framework/rpc-core/target/classes/configuration.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,6 +118,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/rpc-framework/rpc-core/src/main/resources/META-INF/services" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -177,13 +136,13 @@
       <recent name="com.duwei.summer.rpc.serialize.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TokenBuketRateLimiter">
-    <configuration name="ClassScanner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.util.ClassScanner" />
-      <module name="rpc-common" />
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Bootstrap" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.Bootstrap" />
+      <module name="rpc-core" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.duwei.summer.rpc.uid.*" />
+          <option name="PATTERN" value="com.duwei.summer.rpc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -191,12 +150,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ScanUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.util.ScanUtils" />
-      <module name="rpc-common" />
+    <configuration name="Client" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.test.Client" />
+      <module name="rpc-core" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.duwei.summer.rpc.uid.*" />
+          <option name="PATTERN" value="com.duwei.summer.rpc.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Service" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.test.Service" />
+      <module name="rpc-core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.duwei.summer.rpc.test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -217,19 +189,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.context.xml.Test" />
-      <module name="rpc-core" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.duwei.summer.rpc.context.xml.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TokenBuketRateLimiter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.duwei.summer.rpc.protection.TokenBuketRateLimiter" />
       <module name="rpc-core" />
@@ -243,17 +202,35 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Bootstrap" />
+      <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Service" />
+      <item itemvalue="Application.Test (1)" />
+      <item itemvalue="Application.TokenBuketRateLimiter" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Service" />
+        <item itemvalue="Application.Bootstrap" />
         <item itemvalue="Application.TokenBuketRateLimiter" />
         <item itemvalue="Application.Test (1)" />
-        <item itemvalue="Application.Test" />
-        <item itemvalue="Application.ClassScanner" />
-        <item itemvalue="Application.ScanUtils" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructuralSearchPlugin">
+    <searchConfiguration name="Unnamed" created="1692971784968" text="System" recursive="true" caseInsensitive="false" type="JAVA" pattern_context="default" scope_type="PROJECT" scope_descriptor="" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </searchConfiguration>
+    <searchConfiguration name="Unnamed" created="1692971767318" text="System.out.println" recursive="true" caseInsensitive="false" type="JAVA" pattern_context="default" scope_type="PROJECT" scope_descriptor="" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </searchConfiguration>
+    <searchConfiguration name="Unnamed" created="1692971744042" text="System.out.println;" recursive="true" caseInsensitive="false" type="JAVA" pattern_context="default" scope_type="PROJECT" scope_descriptor="" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </searchConfiguration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="c317e6da-d71d-40ae-9cc4-8249bbeb82d4" name="Changes" comment="" />
@@ -268,7 +245,10 @@
       <workItem from="1692787380399" duration="428000" />
       <workItem from="1692787821350" duration="1719000" />
       <workItem from="1692798277723" duration="3005000" />
-      <workItem from="1692838649801" duration="30103000" />
+      <workItem from="1692838649801" duration="30984000" />
+      <workItem from="1692925029038" duration="475000" />
+      <workItem from="1692927326024" duration="2685000" />
+      <workItem from="1692932927006" duration="28018000" />
     </task>
     <servers />
   </component>
@@ -299,6 +279,11 @@
           <properties class="java.nio.file.NoSuchFileException" package="java.nio.file" />
           <option name="timeStamp" value="4" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/rpc-framework/rpc-core/src/main/java/com/duwei/summer/rpc/Bootstrap.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

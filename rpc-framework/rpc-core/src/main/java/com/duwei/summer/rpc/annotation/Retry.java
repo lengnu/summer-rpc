@@ -23,12 +23,12 @@ public @interface Retry {
     /**
      * 重试次数
      */
-    int retryTimes() default 3;
+    int retryTimes() default RetryPolicy.DEFAULT_RETRY_TIMES;
 
     /**
      * 基础重试单位ms
      */
-    int tickTimes() default 200;
+    int tickTimes() default RetryPolicy.DEFAULT_RETRY_INTERVAL;
 
     /**
      * 重试策略

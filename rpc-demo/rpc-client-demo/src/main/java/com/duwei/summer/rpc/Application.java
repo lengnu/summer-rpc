@@ -11,7 +11,7 @@ package com.duwei.summer.rpc;
  */
 public class Application {
     public static void main(String[] args) {
-        Bootstrap.getInstance()
-                .application("");
+//        Bootstrap.getInstance()
+//                .application("");
     }
 }

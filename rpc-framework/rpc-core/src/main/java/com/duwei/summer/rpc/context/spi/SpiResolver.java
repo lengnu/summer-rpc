@@ -1,7 +1,5 @@
 package com.duwei.summer.rpc.context.spi;
 
-import com.duwei.summer.rpc.context.Configuration;
-
 
 /**
  * <p>
@@ -13,7 +11,7 @@ import com.duwei.summer.rpc.context.Configuration;
  * @since: 1.0
  */
 public class SpiResolver {
-    public void load(Configuration configuration){
+    public void load( ){
 
     }
 }

@@ -1,7 +1,7 @@
 package com.duwei.summer.rpc.transport.handler.service;
 
 import com.duwei.summer.rpc.Bootstrap;
-import com.duwei.summer.rpc.compress.ServiceConfig;
+import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.transport.message.request.RequestPayload;
 import com.duwei.summer.rpc.transport.message.request.RpcRequest;
 import io.netty.channel.ChannelHandlerContext;
@@ -40,7 +40,7 @@ public class MethodCallHandler extends SimpleChannelInboundHandler<RpcRequest> {
         String methodName = requestPayload.getMethodName();
         Class<?>[] parametersType = requestPayload.getParametersType();
         Object[] parametersValue = requestPayload.getParametersValue();
-        ServiceConfig<?> serviceConfig = Bootstrap.getServiceConfig(interfaceName);
+        ServiceConfig<?> serviceConfig = null;
         Object refImpl = serviceConfig.getRef();
 
 

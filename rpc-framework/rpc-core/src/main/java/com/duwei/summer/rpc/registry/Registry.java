@@ -1,6 +1,6 @@
 package com.duwei.summer.rpc.registry;
 
-import com.duwei.summer.rpc.compress.ServiceConfig;
+import com.duwei.summer.rpc.config.ServiceConfig;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -24,7 +24,15 @@ public interface Registry {
     /**
      * 服务发现
      * @param serviceName   服务名称
+     * @param group 分组
      * @return  服务列表
      */
-    List<InetSocketAddress> lookup(String serviceName);
+    List<InetSocketAddress> lookup(String serviceName,String group);
+
+
+    /**
+     * 根据配置项初始化出则中心
+     * @param registryConfig 配置项
+     */
+    void init(RegistryConfig registryConfig);
 }

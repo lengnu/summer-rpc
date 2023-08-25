@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- *  需要被发布的服务
+ * 需要被发布的服务
  * <p>
  *
  * @author: duwei
@@ -17,4 +17,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RpcService {
+    String name() default "";
+
+    String group() default "default";
 }

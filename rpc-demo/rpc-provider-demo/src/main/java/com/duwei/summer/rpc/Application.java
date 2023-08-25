@@ -1,7 +1,7 @@
 package com.duwei.summer.rpc;
 
 
-import com.duwei.summer.rpc.compress.ServiceConfig;
+import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 
 /**
@@ -15,11 +15,11 @@ import com.duwei.summer.rpc.registry.RegistryConfig;
  */
 public class Application {
     public static void main(String[] args) {
-        ServiceConfig<?> serviceConfig = new ServiceConfig<>();
-        Bootstrap.getInstance()
-                .application("hello-word-provider")
-                .registry(new RegistryConfig("zookeeper"))
-                .publish(serviceConfig)
-                .start();
+//        ServiceConfig<?> serviceConfig = new ServiceConfig<>();
+//        Bootstrap.getInstance()
+//                .application("hello-word-provider")
+//                .registry(new RegistryConfig("zookeeper"))
+//                .publish(serviceConfig)
+//                .start();
     }
 }

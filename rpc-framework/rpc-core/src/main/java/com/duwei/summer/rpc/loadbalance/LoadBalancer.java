@@ -1,8 +1,5 @@
 package com.duwei.summer.rpc.loadbalance;
 
-import com.duwei.summer.rpc.Bootstrap;
-import com.duwei.summer.rpc.context.ApplicationContext;
-
 import java.net.InetSocketAddress;
 import java.util.List;
 
@@ -21,9 +18,10 @@ public interface LoadBalancer {
      * 根据服务名获取一个可用服务
      *
      * @param serviceName 服务名称
+     * @param group 服务组
      * @return 可用服务
      */
-    InetSocketAddress selectServiceAddress(String serviceName);
+    InetSocketAddress selectServiceAddress(String serviceName,String group);
 
     /**
      * 更新服务列表
@@ -32,9 +30,17 @@ public interface LoadBalancer {
      */
     void updateServiceList(String serviceName, List<InetSocketAddress> serviceAddressList);
 
+
     /**
-     * 设置上下文信息
-     * @param application 上下文信息
+     * 获取某个服务所有可用的地址
+     * @param serviceName   服务名称
+     * @return  该服务下所有可用服务提供者的地址
      */
-    void setApplication(ApplicationContext application);
+    List<InetSocketAddress> getServiceAddress(String serviceName);
+
+    /**
+     * 初始化
+     * @param loadBalancerConfig    负载均衡的参数配置
+     */
+    void init(LoadBalancerConfig loadBalancerConfig);
 }
