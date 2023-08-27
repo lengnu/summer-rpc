@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-
 /**
  * <p>
  *
@@ -26,22 +25,21 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CompressorFactory {
     private static final Map<String, CompressorWrapper> COMPRESSOR_CACHE_BY_NAME = new ConcurrentHashMap<>(4);
     private static final Map<Byte, CompressorWrapper> COMPRESSOR_CACHE_BY_TYPE = new ConcurrentHashMap<>(4);
-     static final Map<Class<? extends  Compressor>, CompressorWrapper> COMPRESSOR_CACHE_BY_CLASS = new ConcurrentHashMap<>(4);
+    static final Map<Class<? extends Compressor>, CompressorWrapper> COMPRESSOR_CACHE_BY_CLASS = new ConcurrentHashMap<>(4);
 
 
-
-      static void registerCompressorInternal(byte type, String name, Compressor compressor) {
+    static void registerCompressorInternal(byte type, String name, Compressor compressor) {
         if (COMPRESSOR_CACHE_BY_NAME.containsKey(name) || COMPRESSOR_CACHE_BY_TYPE.containsKey(type) || COMPRESSOR_CACHE_BY_CLASS.containsKey(compressor.getClass())) {
             throw new SerializeException("添加的序列化器name、type或者class重复");
         }
         CompressorWrapper compressorWrapper = new CompressorWrapper(type, name, compressor);
         COMPRESSOR_CACHE_BY_NAME.put(name, compressorWrapper);
         COMPRESSOR_CACHE_BY_TYPE.put(type, compressorWrapper);
-         COMPRESSOR_CACHE_BY_CLASS.put(compressor.getClass(),compressorWrapper);
+        COMPRESSOR_CACHE_BY_CLASS.put(compressor.getClass(), compressorWrapper);
     }
 
     static {
-        registerCompressorInternal(CompressorType.GZIP_CODE,CompressorType.GZIP,new GzipCompressor());
+        registerCompressorInternal(CompressorType.GZIP_CODE, CompressorType.GZIP, new GzipCompressor());
     }
 
     public static CompressorWrapper getCompressorWrapper(String serializerName) {

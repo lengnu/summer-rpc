@@ -2,6 +2,7 @@ package com.duwei.summer.rpc.serialize;
 
 import com.duwei.summer.rpc.exception.SerializeException;
 import com.duwei.summer.rpc.serialize.impl.HessianSerializer;
+import com.duwei.summer.rpc.serialize.impl.JdkSerializer;
 import com.duwei.summer.rpc.serialize.impl.JsonSerializer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +27,7 @@ public class SerializerFactory {
     private static final Map<Byte, SerializerWrapper> SERIALIZER_CACHE_BY_ID = new ConcurrentHashMap<>(4);
      static final Map<Class<? extends Serializer>,SerializerWrapper> SERIALIZER_CACHE_BY_CLASS = new LinkedHashMap<>(4);
 
-    static synchronized void registerSerializerInternal(byte type, String name, Serializer serializer) {
+    static  void registerSerializerInternal(byte type, String name, Serializer serializer) {
         if (SERIALIZER_CACHE_BY_NAME.containsKey(name) || SERIALIZER_CACHE_BY_ID.containsKey(type) ||
         SERIALIZER_CACHE_BY_CLASS.containsKey(serializer.getClass())) {
             throw new SerializeException("添加的序列化器name、type或class重复");
@@ -38,7 +39,7 @@ public class SerializerFactory {
     }
 
     static {
-        registerSerializerInternal(SerializerType.JDK_CODE, SerializerType.JDK, new JsonSerializer());
+        registerSerializerInternal(SerializerType.JDK_CODE, SerializerType.JDK, new JdkSerializer());
         registerSerializerInternal(SerializerType.HESSIAN_CODE, SerializerType.HESSIAN, new HessianSerializer());
     }
 

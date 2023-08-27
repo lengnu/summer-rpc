@@ -10,5 +10,5 @@ package com.duwei.summer.rpc.test;
  * @since: 1.0
  */
 public interface IUser {
-    void say();
+    String say();
 }

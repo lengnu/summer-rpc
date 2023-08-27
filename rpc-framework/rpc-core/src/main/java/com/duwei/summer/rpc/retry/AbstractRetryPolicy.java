@@ -1,5 +1,7 @@
 package com.duwei.summer.rpc.retry;
 
+import com.duwei.summer.rpc.annotation.RetryPolicy;
+
 /**
  * <p>
  *
@@ -9,7 +11,7 @@ package com.duwei.summer.rpc.retry;
  * @date: 2023-08-24 16:16
  * @since: 1.0
  */
-public abstract class AbstractRetryPolicy implements RetryPolicy{
+public abstract class AbstractRetryPolicy implements RetryPolicy {
     protected int retryTimes;
     protected int tickTimes;
 

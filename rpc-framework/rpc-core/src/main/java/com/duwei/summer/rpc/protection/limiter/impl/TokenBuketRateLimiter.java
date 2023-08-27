@@ -1,7 +1,7 @@
-package com.duwei.summer.rpc.protection;
+package com.duwei.summer.rpc.protection.limiter.impl;
 
 
-import com.duwei.summer.rpc.transport.message.request.RpcRequest;
+import com.duwei.summer.rpc.protection.limiter.RateLimiter;
 
 /**
  * <p>
@@ -13,6 +13,8 @@ import com.duwei.summer.rpc.transport.message.request.RpcRequest;
  * @since: 1.0
  */
 public class TokenBuketRateLimiter implements RateLimiter {
+    private static final long DEFAULT_CAPACITY = 10;
+    private static final long DEFAULT_RATE = 5;
     /**
      * 令牌数量
      */
@@ -41,14 +43,19 @@ public class TokenBuketRateLimiter implements RateLimiter {
         this.putTokenMinInternalTime = 1000 / rate;
     }
 
-    /**
-     * 判断请求是否可用进行放行
-     *
-     * @return true:放行 false:拦截
-     */
+    public TokenBuketRateLimiter() {
+        this(DEFAULT_CAPACITY, DEFAULT_RATE);
+    }
+
     @Override
-    public synchronized boolean allow(RpcRequest rpcRequest) {
-        //1. 给令牌桶添加令牌
+    public boolean allow() {
+        // 1.获取令牌
+        if (tokens >= 1) {
+            tokens--;
+            return true;
+        }
+
+        //2. 令牌不够先尝试给令牌桶添加令牌
         long currentTime = System.currentTimeMillis();
         long timeInterval = currentTime - lastPutTokenTime;
         if (timeInterval >= putTokenMinInternalTime) {
@@ -57,13 +64,11 @@ public class TokenBuketRateLimiter implements RateLimiter {
             lastPutTokenTime = System.currentTimeMillis();
         }
 
-        // 2.如果令牌桶中有令牌则放行
-        if (tokens > 0) {
+        // 3.如果令牌桶中有令牌则放行
+        if (tokens >= 1) {
             tokens--;
             return true;
         }
         return false;
     }
-
-
 }

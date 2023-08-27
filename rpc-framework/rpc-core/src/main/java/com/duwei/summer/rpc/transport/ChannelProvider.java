@@ -1,5 +1,6 @@
 package com.duwei.summer.rpc.transport;
 
+import com.duwei.summer.rpc.context.ApplicationContext;
 import com.duwei.summer.rpc.exception.NetworkException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -8,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.*;
 
 /**
@@ -24,12 +24,19 @@ import java.util.concurrent.*;
 public class ChannelProvider {
     public static final int CONNECTION_TIME = 3;
     public static final TimeUnit CONNECTION_UNIT = TimeUnit.SECONDS;
+
+    private ApplicationContext applicationContext;
     /**
      * 用于创建channel的锁
      */
     private final Object channelCreatLock = new Object();
-    private final NettyBootstrapInitializer nettyBootstrapInitializer = new NettyBootstrapInitializer();
     private final Map<InetSocketAddress, Channel> channelCache = new ConcurrentHashMap<>(16);
+    private NettyClientStarter nettyClientStarter;
+
+
+    public ChannelProvider(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     public void addChannel(InetSocketAddress address, Channel channel) {
         channelCache.put(address, channel);
@@ -37,9 +44,8 @@ public class ChannelProvider {
 
     public void removeChannel(InetSocketAddress address) {
         channelCache.remove(address);
-        log.debug("与服务器{}断开连接，移除缓存移Channel",address);
+        log.debug("与服务器{}断开连接，移除缓存移Channel", address);
     }
-
 
 
     /**
@@ -54,7 +60,7 @@ public class ChannelProvider {
                 channel = channelCache.get(inetSocketAddress);
                 if (channel == null) {
                     channel = createChannel(inetSocketAddress);
-                    channelCache.put(inetSocketAddress,channel);
+                    channelCache.put(inetSocketAddress, channel);
                 }
             }
         }
@@ -62,9 +68,13 @@ public class ChannelProvider {
     }
 
     private Channel createChannel(InetSocketAddress inetSocketAddress) {
+        if (nettyClientStarter == null) {
+            nettyClientStarter = new NettyClientStarter(applicationContext);
+        }
+
         Channel channel;
         CompletableFuture<Channel> channelCompleteFuture = new CompletableFuture<>();
-        ChannelFuture future = nettyBootstrapInitializer.connect(inetSocketAddress).addListener((ChannelFutureListener) channelFuture -> {
+        nettyClientStarter.connect(inetSocketAddress).addListener((ChannelFutureListener) channelFuture -> {
             if (channelFuture.isSuccess()) {
                 if (log.isDebugEnabled()) {
                     log.debug("与服务器{}成功建立了连接", inetSocketAddress);

@@ -60,7 +60,7 @@ public class ZookeeperRegistry extends AbstractRegistry {
 
         // 注册本机服务
         // 创建的是临时节点
-        String nodePath = defaultNode + "/" + NetworkUtils.getIp() + ":" + getRegistryConfig().getPort();
+        String nodePath = defaultNode + "/" + NetworkUtils.getIp() + ":" + getRegistryConfig().getApplicationContext().getPort();
         if (!ZookeeperUtils.exists(zooKeeper, nodePath, null)) {
             createParentIfNeed(nodePath,CreateMode.EPHEMERAL);
         }

@@ -1,7 +1,6 @@
 package com.duwei.summer.rpc.annotation;
 
 import com.duwei.summer.rpc.retry.ExponentialRetreatRetryPolicy;
-import com.duwei.summer.rpc.retry.RetryPolicy;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

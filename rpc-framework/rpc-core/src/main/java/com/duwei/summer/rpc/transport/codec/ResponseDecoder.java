@@ -30,14 +30,13 @@ public class ResponseDecoder extends LengthFieldBasedFrameDecoder {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        Object decode = super.decode(ctx, in);
-        if (decode instanceof ByteBuf) {
-            return decodeFrame((ByteBuf) decode);
-        }
-        return null;
+        return decodeFrame(in);
     }
 
     private Object decodeFrame(ByteBuf byteBuf) {
+        if (log.isDebugEnabled()){
+            log.debug("远程服务调用成功，开始重构响应");
+        }
         // 1.解析魔数
         int magic = byteBuf.readInt();
         if (magic != MAGIC) {
@@ -74,17 +73,17 @@ public class ResponseDecoder extends LengthFieldBasedFrameDecoder {
                 .serializeType(serializeType)
                 .compressedType(compressType)
                 .timeStamp(timestamp)
-                .body(parseResponse(serializeType,compressType,body))
+                .body(parseResponse(serializeType, compressType, body))
                 .build();
     }
 
 
-    private Object parseResponse(byte serializeType,byte compressType,byte[] body){
-        if (body != null && body.length != 0){
+    private Object parseResponse(byte serializeType, byte compressType, byte[] body) {
+        if (body != null && body.length != 0) {
             CompressorWrapper compressorWrapper = CompressorFactory.getCompressorWrapper(compressType);
             byte[] decompress = compressorWrapper.getCompressor().decompress(body);
 
-            return SerializerFactory.getSerializerWrapper(serializeType).getSerializer().deserialize(Object.class,decompress);
+            return SerializerFactory.getSerializerWrapper(serializeType).getSerializer().deserialize(Object.class, decompress);
         }
         return null;
     }

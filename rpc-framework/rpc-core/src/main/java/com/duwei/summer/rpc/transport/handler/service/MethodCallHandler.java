@@ -1,9 +1,13 @@
 package com.duwei.summer.rpc.transport.handler.service;
 
 import com.duwei.summer.rpc.Bootstrap;
+import com.duwei.summer.rpc.compress.CompressorType;
 import com.duwei.summer.rpc.config.ServiceConfig;
+import com.duwei.summer.rpc.serialize.SerializerType;
 import com.duwei.summer.rpc.transport.message.request.RequestPayload;
 import com.duwei.summer.rpc.transport.message.request.RpcRequest;
+import com.duwei.summer.rpc.transport.message.response.ResponseCode;
+import com.duwei.summer.rpc.transport.message.response.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +32,21 @@ public class MethodCallHandler extends SimpleChannelInboundHandler<RpcRequest> {
         RequestPayload requestPayload = rpcRequest.getRequestPayload();
 
         // 2.根据负载内容进行方法调用
-        Object object = callTargetMethod(requestPayload);
+        // Object object = callTargetMethod(requestPayload);
 
         // 3.封装响应
+        RpcResponse build = RpcResponse.builder().code(ResponseCode.SUCCESS.getCode())
+                .compressedType(rpcRequest.getCompressedType())
+                .serializeType(rpcRequest.getSerializeType())
+                .timeStamp(System.currentTimeMillis())
+                .requestId(rpcRequest.getRequestId())
+                .build();
 
         // 4.写出响应
+        log.info("请求处理完成，开始进行响应，客户端ip{}，客户端请求接口{}",
+                channelHandlerContext.channel().remoteAddress(),
+                rpcRequest.getRequestPayload().getInterfaceName());
+        channelHandlerContext.channel().writeAndFlush(build);
     }
 
     private Object callTargetMethod(RequestPayload requestPayload) {

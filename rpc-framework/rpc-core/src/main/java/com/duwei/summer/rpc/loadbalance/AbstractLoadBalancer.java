@@ -53,7 +53,6 @@ public abstract class AbstractLoadBalancer implements LoadBalancer {
             synchronized (this) {
                 selector = serviceSelectorCache.get(serviceName);
                 if (selector == null) {
-                    System.out.println(getLoadBalancerConfig().getApplicationContext() + "lo");
                     List<InetSocketAddress> serviceAddressList =
                             getLoadBalancerConfig().getApplicationContext()
                             .getRegistryConfig().getRegistry().lookup(serviceName, group);

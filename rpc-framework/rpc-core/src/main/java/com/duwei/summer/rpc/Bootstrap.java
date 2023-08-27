@@ -4,14 +4,11 @@ import com.duwei.summer.rpc.config.ReferenceConfig;
 import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.context.ApplicationContext;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfig;
-import com.duwei.summer.rpc.transport.NettyBootstrapInitializer;
+import com.duwei.summer.rpc.protection.limiter.RateLimiter;
 import com.duwei.summer.rpc.registry.RegistryConfig;
+import com.duwei.summer.rpc.transport.NettyServerStarter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.omg.PortableServer.THREAD_POLICY_ID;
-
-import java.io.IOException;
-import java.util.Set;
 
 /**
  * <p>
@@ -30,7 +27,7 @@ public class Bootstrap {
      * 全局配置
      */
     private ApplicationContext applicationContext;
-    private NettyBootstrapInitializer nettyBootstrapInitializer;
+    private volatile NettyServerStarter nettyServerStarter;
 
 
     private Bootstrap() {
@@ -70,6 +67,11 @@ public class Bootstrap {
         return this;
     }
 
+    /**
+     * 发布服务
+     * @param serviceConfig 服务配置
+     * @return  this
+     */
     public Bootstrap publish(ServiceConfig<?> serviceConfig) {
         applicationContext.getRegistryConfig().register(serviceConfig);
         return this;
@@ -97,9 +99,33 @@ public class Bootstrap {
         return this;
     }
 
+    /**
+     * 设置需要发现的服务
+     * @param referenceConfig   需要发现的服务配置
+     * @return  this
+     */
     public Bootstrap reference(ReferenceConfig<?> referenceConfig){
         referenceConfig.setApplicationContext(applicationContext);
         return this;
+    }
+
+    public Bootstrap rateLimiter(RateLimiter rateLimiter){
+        this.applicationContext.setRateLimiter(rateLimiter);
+        return this;
+    }
+
+    /**
+     * 启动netty服务端
+     */
+    public void start(){
+        if (nettyServerStarter == null){
+            synchronized (this){
+                if (nettyServerStarter == null){
+                    this.nettyServerStarter = new NettyServerStarter(applicationContext);
+                    nettyServerStarter.start();
+                }
+            }
+        }
     }
 
 

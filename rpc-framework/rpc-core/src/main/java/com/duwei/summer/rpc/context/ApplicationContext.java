@@ -5,8 +5,9 @@ import com.duwei.summer.rpc.compress.CompressorWrapper;
 import com.duwei.summer.rpc.context.xml.XmlReader;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfig;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfigs;
-import com.duwei.summer.rpc.protection.CircuitBreaker;
-import com.duwei.summer.rpc.protection.RateLimiter;
+import com.duwei.summer.rpc.protection.breaker.CircuitBreaker;
+import com.duwei.summer.rpc.protection.limiter.RateLimiter;
+import com.duwei.summer.rpc.protection.limiter.RateLimiters;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 import com.duwei.summer.rpc.registry.RegistryConfigs;
 import com.duwei.summer.rpc.serialize.SerializerFactory;
@@ -14,7 +15,6 @@ import com.duwei.summer.rpc.serialize.SerializerWrapper;
 import com.duwei.summer.rpc.transport.ChannelProvider;
 import com.duwei.summer.rpc.transport.RequestHolder;
 import com.duwei.summer.rpc.transport.message.request.RpcRequest;
-import com.duwei.summer.rpc.uid.IdGenerator;
 import com.duwei.summer.rpc.uid.IdGeneratorConfig;
 import com.duwei.summer.rpc.uid.IdGeneratorConfigs;
 import io.netty.channel.Channel;
@@ -51,6 +51,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @NoArgsConstructor
 public class ApplicationContext {
     /**
+     * 默认等待响应的超时时间
+     */
+    private static final long DEFAULT_RESPONSE_TIMEOUT = 5L;
+    /**
      * 端口
      */
     private int port = 8888;
@@ -61,7 +65,7 @@ public class ApplicationContext {
     /**
      * 超过市场认为响应失败
      */
-    private long waitResponseTimeout = 2000;
+    private long waitResponseTimeout = DEFAULT_RESPONSE_TIMEOUT;
     /**
      * 针对IP级别的限流器
      */
@@ -72,6 +76,10 @@ public class ApplicationContext {
     private IdGeneratorConfig idGeneratorConfig = IdGeneratorConfigs.newSnowflakeIdGeneratorConfig(1,1);
     private SerializerWrapper serializerWrapper = SerializerFactory.getSerializerWrapper("hessian");
     private CompressorWrapper compressorWrapper = CompressorFactory.getCompressorWrapper("gzip");
+    /**
+     * 限流器，采用默认令牌桶算法
+     */
+    private RateLimiter rateLimiter = RateLimiters.newTokenBucketRateLimiter();
 
     /**
      * 维护当前每个线程正在处理的请求
@@ -80,12 +88,12 @@ public class ApplicationContext {
     /**
      * 维护当前上下文中所有已经建立的连接
      */
-    private final ChannelProvider channelProvider = new ChannelProvider();
+    private final ChannelProvider channelProvider = new ChannelProvider(this);
 
     /**
-     * 记录每个地址的熔断器
+     * 记录每个服务
      */
-    private final Map<InetSocketAddress, CircuitBreaker> circuitBreakerCache = new ConcurrentHashMap<>(16);
+    private final Map<String , CircuitBreaker> circuitBreakerCache = new ConcurrentHashMap<>(16);
     /**
      * 记录已经发出但是未回来的请求
      */
@@ -106,16 +114,9 @@ public class ApplicationContext {
     /**
      * 获取地址对应的熔断器
      */
-    public CircuitBreaker getCircuitBreaker(InetSocketAddress inetSocketAddress) {
-        circuitBreakerCache.putIfAbsent(inetSocketAddress, new CircuitBreaker());
-        return circuitBreakerCache.get(inetSocketAddress);
-    }
-
-    /**
-     * 重置熔断器
-     */
-    public void resetCircuitBreaker(InetSocketAddress inetSocketAddress) {
-        getCircuitBreaker(inetSocketAddress).reset();
+    public CircuitBreaker getCircuitBreaker(String serviceName) {
+        circuitBreakerCache.putIfAbsent(serviceName, new CircuitBreaker());
+        return circuitBreakerCache.get(serviceName);
     }
 
     /**
@@ -165,6 +166,27 @@ public class ApplicationContext {
         return waitResponseTimeout;
     }
 
+
+    /**
+     * 清除等待获取响应的completableFuture
+     * @param requestId 请求ID
+     */
+    public void clearWaitResponseFuture(Long requestId){
+        waitResponseFuture.remove(requestId);
+    }
+
+    /**
+     * 将服务器返回的响应结果进行填充
+     * @param id 请求ID
+     * @param response  响应结果
+     */
+    public void completeResponse(Long id,Object response){
+        CompletableFuture<Object> future = waitResponseFuture.get(id);
+        if (future != null){
+            future.complete(response);
+        }
+    }
+
     /**
      * 重新加载配置文件的内容
      * @param resource  配置文件路径
@@ -173,5 +195,7 @@ public class ApplicationContext {
         XmlReader xmlReader = new XmlReader(this);
         xmlReader.load(resource);
     }
+
+
 
 }

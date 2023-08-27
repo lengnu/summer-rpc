@@ -44,18 +44,17 @@ import static com.duwei.summer.rpc.util.StringUtils.isBlank;
  */
 @Slf4j
 public class XmlReader {
-
+    private static final String HOST = "host";
+    private static final String PORT = "port";
     private static final String APPLICATION = "application";
+    private static final String TIMEOUT = "timeout";
 
     private static final String SERIALIZER = "serializer";
     private static final String COMPRESSOR = "compressor";
     private static final String CLASS = "class";
     private static final String NAME = "name";
 
-    private static final String HOST = "host";
-    private static final String PORT = "port";
-
-    private static final String PROPERTY = "properties";
+    // private static final String PROPERTY = "properties";
     private static final String KEY = "key";
     private static final String VALUE = "value";
 
@@ -312,11 +311,17 @@ public class XmlReader {
     private void parseApplication(Element element) {
         String port = element.getAttribute(PORT);
         String name = element.getAttribute(NAME);
-        if (isBlank(port) || isBlank(name)) {
-            log.error("name 和 port 必须不为空");
-            throw new XmlParseException("name 和 port 必须不为空");
+        String timeout = element.getAttribute(TIMEOUT);
+
+        if (!isBlank(port)){
+            applicationContext.setPort(Integer.parseInt(port));
         }
-        applicationContext.setPort(Integer.parseInt(port));
-        applicationContext.setApplicationName(name);
+        if (!isBlank(name)){
+            applicationContext.setApplicationName(name);
+        }
+        if (!isBlank(timeout)){
+            applicationContext.setWaitResponseTimeout(Long.parseLong(timeout));
+        }
+
     }
 }

@@ -34,14 +34,14 @@ public enum ResponseCode {
      */
     SERVER_ERROR((byte) 50);
 
-    private final int code;
+    private final byte code;
 
 
-    ResponseCode(int code) {
+    ResponseCode(byte code) {
         this.code = code;
     }
 
-    public int getCode() {
+    public byte getCode() {
         return code;
     }
 

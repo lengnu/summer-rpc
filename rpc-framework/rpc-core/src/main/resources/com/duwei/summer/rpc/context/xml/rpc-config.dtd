@@ -44,7 +44,8 @@
 
         <!ELEMENT application EMPTY>
         <!ATTLIST application
-                port CDATA #REQUIRED
-                name CDATA #REQUIRED>
+                port CDATA #IMPLIED
+                name CDATA #IMPLIED
+                timeout CDATA #IMPLIED>
 
         <!ELEMENT  properties (property*)>

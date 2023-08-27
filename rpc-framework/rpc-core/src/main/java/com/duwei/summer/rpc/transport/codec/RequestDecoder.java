@@ -31,7 +31,9 @@ public class RequestDecoder extends LengthFieldBasedFrameDecoder {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        Object decode = super.decode(ctx, in);
+        if (log.isDebugEnabled()){
+            log.debug("接收到客户端{}请求，开始进行解码",ctx.channel().remoteAddress());
+        }
         return decodeFrame(in);
     }
 
@@ -82,7 +84,6 @@ public class RequestDecoder extends LengthFieldBasedFrameDecoder {
         if (body != null && body.length != 0){
             CompressorWrapper compressorWrapper = CompressorFactory.getCompressorWrapper(compressType);
             byte[] decompress = compressorWrapper.getCompressor().decompress(body);
-
             return SerializerFactory.getSerializerWrapper(serializeType).getSerializer().deserialize(RequestPayload.class,decompress);
         }
         return null;

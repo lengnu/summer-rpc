@@ -23,13 +23,13 @@ public class CompressorRegister {
     private static final AtomicInteger ID_NEXT = new AtomicInteger(1);
 
 
-    public static void registerCompressIfNecessary(Class<? extends Compressor> compressorClass) {
+    public synchronized static void registerCompressIfNecessary(Class<? extends Compressor> compressorClass) {
         if (COMPRESSOR_CACHE_BY_CLASS.containsKey(compressorClass)) {
             registerCompressor(compressorClass);
         }
     }
 
-    public static void registerCompressor(Class<? extends Compressor> compressorClass) {
+    private synchronized static void registerCompressor(Class<? extends Compressor> compressorClass) {
         try {
             Compressor compressor = compressorClass.getConstructor().newInstance();
             byte id = (byte) ID_NEXT.getAndIncrement();

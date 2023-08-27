@@ -26,11 +26,6 @@ public class Service {
                         .ref(user)
                         .interfaceProvider(IUser.class)
                         .build())
-                .publish(ServiceConfig.builder()
-                        .group("primary")
-                        .ref(new Object())
-                        .interfaceProvider(Object.class)
-                        .build());
-        System.in.read();
+                .start();
     }
 }

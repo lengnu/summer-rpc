@@ -1,4 +1,4 @@
-package com.duwei.summer.rpc.protection;
+package com.duwei.summer.rpc.protection.limiter;
 
 import com.duwei.summer.rpc.transport.message.request.RpcRequest;
 
@@ -12,5 +12,5 @@ import com.duwei.summer.rpc.transport.message.request.RpcRequest;
  * @since: 1.0
  */
 public interface RateLimiter {
-    boolean allow(RpcRequest rpcRequest);
+    boolean allow();
 }

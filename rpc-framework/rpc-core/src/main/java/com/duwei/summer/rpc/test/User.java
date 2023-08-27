@@ -11,7 +11,7 @@ package com.duwei.summer.rpc.test;
  */
 public class User implements IUser{
     @Override
-    public void say() {
-        System.out.println("hhhh");
+    public String say() {
+        return "ccccc";
     }
 }

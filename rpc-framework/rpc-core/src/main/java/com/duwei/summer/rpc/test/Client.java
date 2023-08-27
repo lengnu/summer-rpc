@@ -6,6 +6,12 @@ import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfigs;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 import com.duwei.summer.rpc.registry.RegistryConfigs;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -31,7 +37,7 @@ public class Client {
         instance.load("config.xml").reference(referenceConfig);
         Thread.sleep(6 * 1000);
 
-        referenceConfig.get().say();
+        System.out.println(referenceConfig.get().say());
 
     }
 }
