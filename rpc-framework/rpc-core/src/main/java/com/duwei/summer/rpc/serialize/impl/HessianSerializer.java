@@ -35,7 +35,7 @@ public class HessianSerializer implements Serializer {
             oos.writeObject(object);
             oos.flush();
             if (log.isDebugEnabled()) {
-                log.debug("使用Hessian方式序列化对象成功{}", object);
+                log.debug("使用Hessian方式序列化对象成功");
             }
             return bas.toByteArray();
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class HessianSerializer implements Serializer {
             Hessian2Input ois = new Hessian2Input(bis);
             Object object = ois.readObject();
             if (log.isDebugEnabled()) {
-                log.debug("使用Hessian反序列化对象完成{}", object);
+                log.debug("使用Hessian反序列化对象完成");
             }
             return tClass.cast(object);
         } catch (Exception e) {

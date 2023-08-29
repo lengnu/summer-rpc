@@ -6,7 +6,7 @@ import com.duwei.summer.rpc.exception.CircuitBreakException;
 import com.duwei.summer.rpc.exception.RpcRemoteInvokeException;
 import com.duwei.summer.rpc.protection.breaker.CircuitBreaker;
 import com.duwei.summer.rpc.retry.FixedIntervalRetryPolicy;
-import com.duwei.summer.rpc.annotation.RetryPolicy;
+import com.duwei.summer.rpc.retry.RetryPolicy;
 import com.duwei.summer.rpc.retry.RetryPolicyMetadataHolder;
 import com.duwei.summer.rpc.transport.message.request.RequestPayload;
 import com.duwei.summer.rpc.transport.message.request.RequestType;
@@ -89,13 +89,9 @@ public class RpcConsumerInvocationHandler implements InvocationHandler {
                         }
                     }
                 });
-                Object object = resultFuture.get(waitResponseTimeout, TimeUnit.SECONDS);
-                // 记录熔断器
-                circuitBreaker.recordSuccess();
-                return object;
+                return resultFuture.get(waitResponseTimeout, TimeUnit.SECONDS);
 
             } catch (Exception e) {
-                circuitBreaker.recordFailure();
                 if (retryPolicy.hasRetryTimes()) {
                     try {
                         Thread.sleep(retryPolicy.nextIntervalTime());
@@ -110,7 +106,6 @@ public class RpcConsumerInvocationHandler implements InvocationHandler {
             } finally {
                 // 清理当前上下文的请求对象
                 applicationContext.removeRpcRequest();
-                applicationContext.clearWaitResponseFuture(rpcRequest.getRequestId());
             }
         }
     }

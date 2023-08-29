@@ -1,14 +1,20 @@
 package com.duwei.summer.rpc;
 
+import com.duwei.summer.rpc.annotation.RpcService;
+import com.duwei.summer.rpc.close.ShutdownHock;
 import com.duwei.summer.rpc.config.ReferenceConfig;
 import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.context.ApplicationContext;
+import com.duwei.summer.rpc.context.spi.SpiReader;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfig;
 import com.duwei.summer.rpc.protection.limiter.RateLimiter;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 import com.duwei.summer.rpc.transport.NettyServerStarter;
+import com.duwei.summer.rpc.util.ClassScanner;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 public class Bootstrap {
     private static final Bootstrap bootstrap = new Bootstrap();
     /**
+     * 默认配置文件路径
+     */
+    private static final String DEFAULT_CONFIG_LOCATION = "rpc-config.xml";
+    /**
      * 全局配置
      */
     private ApplicationContext applicationContext;
@@ -32,6 +42,11 @@ public class Bootstrap {
 
     private Bootstrap() {
         applicationContext = new ApplicationContext();
+        applicationContext.getRegistryConfig().setApplicationContext(applicationContext);
+        applicationContext.getLoadBalancerConfig().setApplicationContext(applicationContext);
+        applicationContext.getIdGeneratorConfig().setApplicationContext(applicationContext);
+        SpiReader.findService();
+        this.load(DEFAULT_CONFIG_LOCATION);
     }
 
     public Bootstrap load(String resource) {
@@ -69,11 +84,18 @@ public class Bootstrap {
 
     /**
      * 发布服务
+     *
      * @param serviceConfig 服务配置
-     * @return  this
+     * @return this
      */
     public Bootstrap publish(ServiceConfig<?> serviceConfig) {
+        getApplicationContext().getRegistryConfig().setApplicationContext(applicationContext);
         applicationContext.getRegistryConfig().register(serviceConfig);
+        return this;
+    }
+
+    public Bootstrap publish(List<ServiceConfig<?>> serviceConfigs){
+        serviceConfigs.forEach(this::publish);
         return this;
     }
 
@@ -93,7 +115,7 @@ public class Bootstrap {
     /**
      * 负载均衡配置
      */
-    public Bootstrap loadBalancerConfig(LoadBalancerConfig loadBalancerConfig){
+    public Bootstrap loadBalancerConfig(LoadBalancerConfig loadBalancerConfig) {
         applicationContext.setLoadBalancerConfig(loadBalancerConfig);
         loadBalancerConfig.setApplicationContext(applicationContext);
         return this;
@@ -101,32 +123,51 @@ public class Bootstrap {
 
     /**
      * 设置需要发现的服务
-     * @param referenceConfig   需要发现的服务配置
-     * @return  this
+     *
+     * @param referenceConfig 需要发现的服务配置
+     * @return this
      */
-    public Bootstrap reference(ReferenceConfig<?> referenceConfig){
+    public Bootstrap reference(ReferenceConfig<?> referenceConfig) {
         referenceConfig.setApplicationContext(applicationContext);
         return this;
     }
 
-    public Bootstrap rateLimiter(RateLimiter rateLimiter){
+    public Bootstrap rateLimiter(RateLimiter rateLimiter) {
         this.applicationContext.setRateLimiter(rateLimiter);
         return this;
     }
 
+    public Bootstrap earlyConnect(boolean allow) {
+        this.applicationContext.setEarlyConnect(allow);
+        return this;
+    }
+
+    public Bootstrap scanService(String basePackage) {
+        ClassScanner.scan(basePackage, RpcService.class).forEach(tClass -> {
+            try {
+                ServiceConfig.build(tClass).forEach(this::publish);
+            } catch (Exception e) {
+                log.error("服务{}发布失败", tClass);
+            }
+        });
+        return this;
+    }
+
+
     /**
      * 启动netty服务端
      */
-    public void start(){
-        if (nettyServerStarter == null){
-            synchronized (this){
-                if (nettyServerStarter == null){
+    public void start() {
+        if (nettyServerStarter == null) {
+            Runtime.getRuntime().addShutdownHook(new ShutdownHock(applicationContext));
+            synchronized (this) {
+                if (nettyServerStarter == null) {
                     this.nettyServerStarter = new NettyServerStarter(applicationContext);
                     nettyServerStarter.start();
                 }
             }
         }
-    }
 
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.duwei.summer.rpc.annotation;
+package com.duwei.summer.rpc.retry;
 
 /**
  * <p>

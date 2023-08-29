@@ -8,12 +8,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.duwei.summer.rpc.serialize.SerializerFactory.SERIALIZER_CACHE_BY_CLASS;
 
+/**
+ * @author duwei
+ */
 @Slf4j
 public class SerializerRegister {
     private static final AtomicInteger ID_NEXT = new AtomicInteger(3);
 
     public synchronized static void registerSerializerIfNecessary(Class<? extends Serializer> serializerClass) {
-        if (SERIALIZER_CACHE_BY_CLASS.containsKey(serializerClass)) {
+        if (!SERIALIZER_CACHE_BY_CLASS.containsKey(serializerClass)) {
             registerSerializer(serializerClass);
         }
     }

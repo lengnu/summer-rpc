@@ -42,7 +42,7 @@ public class PerceptionWatcher implements Watcher {
             // 老的服务列表
             List<InetSocketAddress> oldServiceAddress = applicationContext.getLoadBalancerConfig().getLoadBalancer().getServiceAddress(serviceName);
             ChannelProvider channelProvider = applicationContext.getChannelProvider();
-            updateChannelWithService(newServiceAddressList, oldServiceAddress, channelProvider,serviceName);
+            updateChannelWithService(newServiceAddressList, oldServiceAddress, channelProvider, serviceName);
             if (log.isDebugEnabled()) {
                 log.debug("服务列表更新完成");
             }
@@ -62,10 +62,7 @@ public class PerceptionWatcher implements Watcher {
                 inet -> !newServiceAddressList.contains(inet)
         ).collect(Collectors.toList());
         // 更新服务列表
-        applicationContext.getLoadBalancerConfig().getLoadBalancer().updateServiceList(serviceName,newServiceAddressList);
-        // 直接建立所有新的连接
-        // TODO 有待商榷
-        // newAddInet.forEach(channelProvider::getChannel);
+        applicationContext.getLoadBalancerConfig().getLoadBalancer().updateServiceList(serviceName, newServiceAddressList);
         // 删除所有老的连接
         removeInet.forEach(channelProvider::removeChannel);
 

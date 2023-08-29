@@ -24,7 +24,7 @@ public class CompressorRegister {
 
 
     public synchronized static void registerCompressIfNecessary(Class<? extends Compressor> compressorClass) {
-        if (COMPRESSOR_CACHE_BY_CLASS.containsKey(compressorClass)) {
+        if (!COMPRESSOR_CACHE_BY_CLASS.containsKey(compressorClass)) {
             registerCompressor(compressorClass);
         }
     }

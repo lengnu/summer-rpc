@@ -5,11 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -45,7 +41,15 @@ public class CircuitBreaker {
      * 连续成功次数
      */
     private int consecutiveSuccesses;
-    private final ScheduledExecutorService executorService;
+    private static final ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(1, new ThreadFactory() {
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r);
+            thread.setDaemon(true);
+            thread.setName("服务熔断重置线程-0");
+            return thread;
+        }
+    });
     private ScheduledFuture<?> resetFuture;
 
     public CircuitBreaker() {
@@ -59,7 +63,6 @@ public class CircuitBreaker {
         this.lastFailureTime = null;
         this.consecutiveFailures = 0;
         this.consecutiveSuccesses = 0;
-        this.executorService = Executors.newScheduledThreadPool(1);
         this.resetFuture = null;
     }
 
@@ -146,7 +149,6 @@ public class CircuitBreaker {
             resetFuture = null;
         }
     }
-
 
     public int getFailureThreshold() {
         return failureThreshold;

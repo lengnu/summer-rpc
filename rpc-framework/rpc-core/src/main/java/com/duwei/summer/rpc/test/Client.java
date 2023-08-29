@@ -4,6 +4,7 @@ import com.duwei.summer.rpc.Bootstrap;
 import com.duwei.summer.rpc.config.ReferenceConfig;
 import com.duwei.summer.rpc.config.ServiceConfig;
 import com.duwei.summer.rpc.loadbalance.LoadBalancerConfigs;
+import com.duwei.summer.rpc.protection.limiter.RateLimiters;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 import com.duwei.summer.rpc.registry.RegistryConfigs;
 import io.netty.channel.ChannelFuture;
@@ -35,9 +36,10 @@ public class Client {
 
         Bootstrap instance = Bootstrap.getInstance();
         instance.load("config.xml").reference(referenceConfig);
-        Thread.sleep(6 * 1000);
+        Thread.sleep(5 * 1000);
 
         System.out.println(referenceConfig.get().say());
+        System.in.read();
 
     }
 }

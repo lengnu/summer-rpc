@@ -35,7 +35,7 @@ public class ResponseDecoder extends LengthFieldBasedFrameDecoder {
 
     private Object decodeFrame(ByteBuf byteBuf) {
         if (log.isDebugEnabled()){
-            log.debug("远程服务调用成功，开始重构响应");
+            log.debug("接收到服务端响应");
         }
         // 1.解析魔数
         int magic = byteBuf.readInt();

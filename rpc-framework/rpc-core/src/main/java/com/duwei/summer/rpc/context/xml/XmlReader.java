@@ -48,6 +48,7 @@ public class XmlReader {
     private static final String PORT = "port";
     private static final String APPLICATION = "application";
     private static final String TIMEOUT = "timeout";
+    private static final String EARLY_CONNECT = "earlyConnect";
 
     private static final String SERIALIZER = "serializer";
     private static final String COMPRESSOR = "compressor";
@@ -69,19 +70,23 @@ public class XmlReader {
     }
 
     public void load(String resource) {
-        try {
-            // 1.构建document
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = factory.newDocumentBuilder();
-            documentBuilder.setEntityResolver(new LocalDtdEntityResolver());
-            InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(resource);
-            Document document = documentBuilder.parse(inputStream);
-            // 2.解析表达式
-            parseDocument(document);
+        InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+        if (resourceAsStream != null) {
+            try {
+                // 1.构建document
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+                documentBuilder.setEntityResolver(new LocalDtdEntityResolver());
+                Document document = documentBuilder.parse(resourceAsStream);
+                // 2.解析表达式
+                parseDocument(document);
 
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            log.error("xml解析异常");
-            throw new XmlParseException("xml解析异常", e);
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                log.error("xml解析异常");
+                throw new XmlParseException("xml解析异常", e);
+            }
+        }else {
+            log.info("未找到配置文件，将采用默认配置");
         }
     }
 
@@ -312,16 +317,20 @@ public class XmlReader {
         String port = element.getAttribute(PORT);
         String name = element.getAttribute(NAME);
         String timeout = element.getAttribute(TIMEOUT);
+        String earlyConnect = element.getAttribute(EARLY_CONNECT);
 
-        if (!isBlank(port)){
+        if (!isBlank(port)) {
             applicationContext.setPort(Integer.parseInt(port));
         }
-        if (!isBlank(name)){
+        if (!isBlank(name)) {
             applicationContext.setApplicationName(name);
         }
-        if (!isBlank(timeout)){
+        if (!isBlank(timeout)) {
             applicationContext.setWaitResponseTimeout(Long.parseLong(timeout));
         }
 
+        if (!isBlank(earlyConnect)) {
+            applicationContext.setEarlyConnect((Boolean.parseBoolean(earlyConnect)));
+        }
     }
 }

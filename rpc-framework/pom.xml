@@ -13,6 +13,7 @@
         <module>rpc-common</module>
     </modules>
     <artifactId>rpc-framework</artifactId>
+    <packaging>pom</packaging>
 
 
     <dependencies>

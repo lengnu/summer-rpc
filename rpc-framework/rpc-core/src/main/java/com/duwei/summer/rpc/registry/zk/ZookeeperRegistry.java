@@ -64,7 +64,6 @@ public class ZookeeperRegistry extends AbstractRegistry {
         if (!ZookeeperUtils.exists(zooKeeper, nodePath, null)) {
             createParentIfNeed(nodePath,CreateMode.EPHEMERAL);
         }
-
         if (log.isDebugEnabled()) {
             log.debug("服务{}已经被注册,分组{}", serviceConfig.getInterfaceProvider(), serviceConfig
                     .getGroup());

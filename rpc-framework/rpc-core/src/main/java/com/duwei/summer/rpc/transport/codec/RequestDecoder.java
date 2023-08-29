@@ -54,12 +54,12 @@ public class RequestDecoder extends LengthFieldBasedFrameDecoder {
         }
         // 3.解析总长度
         int fullLength = byteBuf.readInt();
-        // 4.解析请求类型
-        byte requestType = byteBuf.readByte();
-        // 5.解析序列化类型
+        // 4.解析序列化类型
         byte serializeType = byteBuf.readByte();
-        // 6.解析压缩类型
+        // 5.解析压缩类型
         byte compressType = byteBuf.readByte();
+        // 6.解析请求类型
+        byte requestType = byteBuf.readByte();
         // 7.解析消息ID
         long requestId = byteBuf.readLong();
         // 8.读取时间戳

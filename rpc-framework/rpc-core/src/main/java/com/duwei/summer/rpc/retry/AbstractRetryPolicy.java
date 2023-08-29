@@ -1,7 +1,5 @@
 package com.duwei.summer.rpc.retry;
 
-import com.duwei.summer.rpc.annotation.RetryPolicy;
-
 /**
  * <p>
  *

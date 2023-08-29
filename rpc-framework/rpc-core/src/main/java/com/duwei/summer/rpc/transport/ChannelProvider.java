@@ -25,24 +25,40 @@ public class ChannelProvider {
     public static final int CONNECTION_TIME = 3;
     public static final TimeUnit CONNECTION_UNIT = TimeUnit.SECONDS;
 
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
     /**
      * 用于创建channel的锁
      */
     private final Object channelCreatLock = new Object();
     private final Map<InetSocketAddress, Channel> channelCache = new ConcurrentHashMap<>(16);
+    private final Map<Channel, Long> responseTimeCache = new ConcurrentHashMap<>(16);
     private NettyClientStarter nettyClientStarter;
 
+
+    public void recordRtt(Channel channel, long time) {
+        responseTimeCache.put(channel, time);
+    }
+
+    public long getRtt(InetSocketAddress inetSocketAddress) {
+        Channel channel = getChannel(inetSocketAddress);
+        Long rtt = responseTimeCache.get(channel);
+        if (rtt == null) {
+            return 0;
+        }
+        return rtt;
+    }
 
     public ChannelProvider(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
-    public void addChannel(InetSocketAddress address, Channel channel) {
-        channelCache.put(address, channel);
-    }
 
     public void removeChannel(InetSocketAddress address) {
+        Channel channel = channelCache.get(address);
+        if (channel != null) {
+            channel.close();
+            responseTimeCache.remove(channel);
+        }
         channelCache.remove(address);
         log.debug("与服务器{}断开连接，移除缓存移Channel", address);
     }

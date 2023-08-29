@@ -29,7 +29,7 @@ public class JdkSerializer implements Serializer {
         ) {
             oos.writeObject(object);
             if (log.isDebugEnabled()) {
-                log.debug("使用JDK方式序列化对象成功{}", object);
+                log.debug("使用JDK方式序列化对象成功");
             }
             return bas.toByteArray();
         } catch (Exception e) {
@@ -47,7 +47,7 @@ public class JdkSerializer implements Serializer {
                 ObjectInputStream ois = new ObjectInputStream(bis)) {
             Object object = ois.readObject();
             if (log.isDebugEnabled()) {
-                log.debug("使用JDK反序列化对象完成{}", object);
+                log.debug("使用JDK反序列化对象完成");
             }
             return tClass.cast(object);
         } catch (Exception e) {

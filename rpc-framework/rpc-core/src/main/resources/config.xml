@@ -19,7 +19,7 @@
         </properties>
     </idGenerator>
 
-    <application port="8899" name="default:test"/>
+    <application port="9206" name="default:test" earlyConnect="true"/>
     <serializer name="jdk"/>
     <compressor name="gzip"/>
 

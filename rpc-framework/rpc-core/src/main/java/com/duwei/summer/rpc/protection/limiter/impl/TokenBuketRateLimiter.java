@@ -48,12 +48,13 @@ public class TokenBuketRateLimiter implements RateLimiter {
     }
 
     @Override
-    public boolean allow() {
+    public synchronized boolean allow() {
         // 1.获取令牌
         if (tokens >= 1) {
             tokens--;
             return true;
         }
+
 
         //2. 令牌不够先尝试给令牌桶添加令牌
         long currentTime = System.currentTimeMillis();

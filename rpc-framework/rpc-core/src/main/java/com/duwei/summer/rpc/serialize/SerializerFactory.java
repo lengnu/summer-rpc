@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Slf4j
 public class SerializerFactory {
-
     private static final Map<String, SerializerWrapper> SERIALIZER_CACHE_BY_NAME = new ConcurrentHashMap<>(4);
     private static final Map<Byte, SerializerWrapper> SERIALIZER_CACHE_BY_ID = new ConcurrentHashMap<>(4);
      static final Map<Class<? extends Serializer>,SerializerWrapper> SERIALIZER_CACHE_BY_CLASS = new LinkedHashMap<>(4);

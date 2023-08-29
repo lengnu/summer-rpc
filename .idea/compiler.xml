@@ -13,7 +13,6 @@
         <module name="rpc-api" />
         <module name="rpc-client-demo" />
         <module name="rpc-core" />
-        <module name="rpc-framework" />
       </profile>
     </annotationProcessing>
   </component>

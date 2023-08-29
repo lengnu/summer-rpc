@@ -52,10 +52,14 @@ public abstract class AbstractLoadBalancer implements LoadBalancer {
         if (selector == null) {
             synchronized (this) {
                 selector = serviceSelectorCache.get(serviceName);
+                ApplicationContext applicationContext = getLoadBalancerConfig().getApplicationContext();
                 if (selector == null) {
                     List<InetSocketAddress> serviceAddressList =
-                            getLoadBalancerConfig().getApplicationContext()
-                            .getRegistryConfig().getRegistry().lookup(serviceName, group);
+                            applicationContext.getRegistryConfig().getRegistry().lookup(serviceName, group);
+                    // 如果允许，则直接在发现服务时候进行连接建立
+                    if(applicationContext.isEarlyConnect()){
+                        serviceAddressList.forEach((serviceAddress) -> applicationContext.getChannelProvider().getChannel(serviceAddress));
+                    }
                     selector = getSelector(serviceName, serviceAddressList);
                     serviceSelectorCache.put(serviceName, selector);
                 }
@@ -66,6 +70,10 @@ public abstract class AbstractLoadBalancer implements LoadBalancer {
 
     @Override
     public synchronized void updateServiceList(String serviceName, List<InetSocketAddress> serviceAddressList) {
+        ApplicationContext applicationContext = getLoadBalancerConfig().getApplicationContext();
+        if (applicationContext.isEarlyConnect()){
+            serviceAddressList.forEach((serviceAddress) -> applicationContext.getChannelProvider().getChannel(serviceAddress));
+        }
         serviceSelectorCache.put(serviceName, getSelector(serviceName, serviceAddressList));
     }
 

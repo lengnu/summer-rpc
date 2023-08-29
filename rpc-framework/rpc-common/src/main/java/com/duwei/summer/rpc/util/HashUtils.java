@@ -45,15 +45,4 @@ public class HashUtils {
         res ^= cur;
         return res & HASH_MASK;
     }
-
-//    public static void main(String[] args) {
-//        String requestId1 = ThreadLocalRandom.current().nextLong() + "";
-//        String requestId2 = ThreadLocalRandom.current().nextLong() + "";
-//        String requestId3 = ThreadLocalRandom.current().nextLong() + "";
-//        String requestId4 = ThreadLocalRandom.current().nextLong() + "";
-//        System.out.println(Integer.toBinaryString(hashTo4Byte(requestId1)));
-//        System.out.println(Integer.toBinaryString(hashTo4Byte(requestId2)));
-//        System.out.println(Integer.toBinaryString(hashTo4Byte(requestId3)));
-//        System.out.println(Integer.toBinaryString(hashTo4Byte(requestId4)));
-//    }
 }

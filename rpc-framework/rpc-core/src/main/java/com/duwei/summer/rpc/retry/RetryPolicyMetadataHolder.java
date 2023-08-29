@@ -1,7 +1,6 @@
 package com.duwei.summer.rpc.retry;
 
 import com.duwei.summer.rpc.annotation.Retry;
-import com.duwei.summer.rpc.annotation.RetryPolicy;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -24,7 +24,7 @@ import java.lang.reflect.Proxy;
 @Data
 public class ReferenceConfig<T> implements ApplicationContextAware {
     private Class<T> interfaceRef;
-    private String group;
+    private String group = "default";
     private ApplicationContext applicationContext;
     @SuppressWarnings("unchecked")
     public T get() {

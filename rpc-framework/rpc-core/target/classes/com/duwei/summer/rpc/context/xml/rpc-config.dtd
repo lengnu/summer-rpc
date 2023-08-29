@@ -42,10 +42,12 @@
                 key CDATA  #REQUIRED
                 value CDATA #REQUIRED>
 
+        <!--应用的基本配置-->
         <!ELEMENT application EMPTY>
         <!ATTLIST application
                 port CDATA #IMPLIED
                 name CDATA #IMPLIED
-                timeout CDATA #IMPLIED>
+                timeout CDATA #IMPLIED
+                earlyConnect CDATA #IMPLIED>
 
         <!ELEMENT  properties (property*)>

@@ -1,5 +1,7 @@
 package com.duwei.summer.rpc.transport.message.response;
 
+import com.duwei.summer.rpc.context.ApplicationContext;
+import com.duwei.summer.rpc.transport.message.request.RpcRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,4 +45,15 @@ public class RpcResponse {
      * 响应结果
      */
     private Object body;
+
+    public static RpcResponse build(RpcRequest rpcRequest,ResponseCode responseCode,Object body){
+        return builder()
+                .code(responseCode.getCode())
+                .compressedType(rpcRequest.getCompressedType())
+                .serializeType(rpcRequest.getSerializeType())
+                .timeStamp(System.currentTimeMillis())
+                .requestId(rpcRequest.getRequestId())
+                .body(body)
+                .build();
+    }
 }

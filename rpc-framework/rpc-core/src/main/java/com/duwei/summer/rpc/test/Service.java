@@ -2,6 +2,7 @@ package com.duwei.summer.rpc.test;
 
 import com.duwei.summer.rpc.Bootstrap;
 import com.duwei.summer.rpc.config.ServiceConfig;
+import com.duwei.summer.rpc.protection.limiter.RateLimiters;
 import com.duwei.summer.rpc.registry.RegistryConfig;
 import com.duwei.summer.rpc.registry.RegistryConfigs;
 
@@ -21,6 +22,8 @@ public class Service {
         Bootstrap instance = Bootstrap.getInstance();
         User user = new User();
         instance.load("config.xml")
+                .port(9407)
+                .rateLimiter(RateLimiters.newTokenBucketRateLimiter(3,1))
                 .publish(ServiceConfig.builder()
                         .group("default")
                         .ref(user)
