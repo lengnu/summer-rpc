@@ -163,7 +163,7 @@ public class ApplicationContext {
         return loadBalancerConfig.getLoadBalancer().selectServiceAddress(serviceName, group);
     }
 
-    public Channel getChannel(InetSocketAddress inetSocketAddress) {
+    public Channel getChannel(InetSocketAddress inetSocketAddress ) {
         return channelProvider.getChannel(inetSocketAddress);
     }
 

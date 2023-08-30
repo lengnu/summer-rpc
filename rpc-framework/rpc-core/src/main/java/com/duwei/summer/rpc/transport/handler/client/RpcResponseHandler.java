@@ -9,6 +9,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.InetSocketAddress;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -72,7 +73,7 @@ public class RpcResponseHandler extends SimpleChannelInboundHandler<RpcResponse>
     private void processHeartBeatResponse(ChannelHandlerContext ctx, RpcResponse rpcResponse) {
         long sendTimestamp = rpcResponse.getTimeStamp();
         long rtt = System.currentTimeMillis() - sendTimestamp;
-        applicationContext.getChannelProvider().recordRtt(ctx.channel(), rtt);
+        applicationContext.getChannelProvider().recordRtt((InetSocketAddress)ctx.channel().remoteAddress(), rtt);
         if (log.isDebugEnabled()) {
             log.debug("接收到服务端{}的心跳检测响应,rtt为 {} ms", ctx.channel().remoteAddress(),
                     rtt);

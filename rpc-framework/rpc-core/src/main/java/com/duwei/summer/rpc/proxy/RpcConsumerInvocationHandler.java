@@ -66,7 +66,8 @@ public class RpcConsumerInvocationHandler implements InvocationHandler {
                 log.debug("接口{}即将请求{}提供的服务", interfaceName.getName(), serviceAddress);
             }
             // 4.获取该服务对应的熔断器
-            CircuitBreaker circuitBreaker = applicationContext.getCircuitBreaker(interfaceName.getName());
+            String serviceName = interfaceName.getName();
+            CircuitBreaker circuitBreaker = applicationContext.getCircuitBreaker(serviceName);
             try {
                 // 不是心跳请求且熔断器打开，那么无法发送
                 if (rpcRequest.getRequestType() != RequestType.HEART_BEAT.getId() && !circuitBreaker.allowRequest()) {
@@ -81,7 +82,7 @@ public class RpcConsumerInvocationHandler implements InvocationHandler {
                 log.info("请求构建成功，开始向远程服务器发送请求，远程服务器地址{}", channel.remoteAddress());
                 channel.writeAndFlush(rpcRequest).addListener((ChannelFutureListener) channelFuture -> {
                     if (!channelFuture.isSuccess()) {
-                        log.error("客户端消息发送失败，请检查远程主机地址{}", channel.remoteAddress());
+                        log.error("客户端消息发送失败，请检查连接{}", channel.remoteAddress());
                         resultFuture.completeExceptionally(channelFuture.cause());
                     } else {
                         if (log.isDebugEnabled()) {
@@ -89,9 +90,12 @@ public class RpcConsumerInvocationHandler implements InvocationHandler {
                         }
                     }
                 });
-                return resultFuture.get(waitResponseTimeout, TimeUnit.SECONDS);
+                Object res = resultFuture.get(waitResponseTimeout, TimeUnit.SECONDS);
+                applicationContext.getCircuitBreaker(serviceName).recordSuccess();
+                return res;
 
             } catch (Exception e) {
+                applicationContext.getCircuitBreaker(serviceName).recordFailure();
                 if (retryPolicy.hasRetryTimes()) {
                     try {
                         Thread.sleep(retryPolicy.nextIntervalTime());
